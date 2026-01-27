@@ -2,7 +2,7 @@
 
 export type EstateStatus = 'secure' | 'away' | 'at-home' | 'alert';
 export type UserRole = 'owner' | 'chief-of-staff' | 'security-lead' | 'staff';
-export type IncidentSeverity = 'critical' | 'warning' | 'info' | 'resolved';
+export type IncidentSeverity = 'critical' | 'warning' | 'info' | 'resolved' | 'alert';
 export type RequestStatus = 'pending' | 'approved' | 'in-progress' | 'completed' | 'declined';
 export type SceneType = 'arrival' | 'entertain' | 'night-lockdown' | 'travel' | 'storm-mode';
 
