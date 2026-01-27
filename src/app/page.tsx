@@ -116,20 +116,20 @@ export default function LandingPage() {
         id="contact"
         backgroundImage="https://images.unsplash.com/photo-1613490493576-7fde63acd811?auto=format&fit=crop&w=2000&q=80"
         gradientDirection="center"
-        className="!items-start"
+        className="!items-start overflow-y-auto"
       >
-        <div className="w-full min-h-screen flex items-center justify-center py-16 px-6">
-          <div className="w-full max-w-lg">
-            <div className="text-center mb-10">
-              <p className="overline mb-3 text-[#C9B370]">Begin Your Journey</p>
-              <h2 className="hero-display text-4xl md:text-5xl text-white mb-4">
+        <div className="w-full flex items-start justify-center py-8 px-6">
+          <div className="w-full max-w-xl">
+            <div className="text-center mb-6">
+              <p className="overline mb-2 text-[#C9B370]">Begin Your Journey</p>
+              <h2 className="hero-display text-3xl md:text-4xl text-white mb-2">
                 Request Access
               </h2>
-              <p className="text-silver-400">
+              <p className="text-silver-400 text-sm">
                 Tell us about your estate and how we can serve you.
               </p>
             </div>
-            <div className="bg-surface/80 backdrop-blur-md border border-border rounded-2xl p-8">
+            <div className="bg-surface/90 backdrop-blur-md border border-border rounded-2xl p-6">
               <AccessForm />
             </div>
           </div>
