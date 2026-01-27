@@ -1,24 +1,17 @@
 import type { Metadata } from "next";
-import { Inter } from "next/font/google";
 import "./globals.css";
-import { AuthProvider } from "@/contexts/AuthContext";
-
-const inter = Inter({
-  subsets: ["latin"],
-  variable: "--font-inter",
-});
 
 export const metadata: Metadata = {
-  title: "Security Platform | Professional Security & Fire Alarm Solutions",
-  description:
-    "Comprehensive security and fire alarm solutions for residential and commercial properties. 24/7 monitoring, professional installation, and smart home integration.",
+  title: "Chatman Concierge | Private Estate Intelligence",
+  description: "Luxury private estate technology and operations platform. Discreet. Intelligent. Estate-ready.",
   keywords: [
-    "security systems",
-    "fire alarm",
-    "home security",
-    "business security",
-    "alarm monitoring",
-    "smart home",
+    "private estate",
+    "estate management",
+    "luxury home",
+    "concierge",
+    "smart estate",
+    "security",
+    "operations",
   ],
 };
 
@@ -29,8 +22,8 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className={`${inter.variable} font-sans antialiased`}>
-        <AuthProvider>{children}</AuthProvider>
+      <body className="font-sans antialiased">
+        {children}
       </body>
     </html>
   );
