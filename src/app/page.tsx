@@ -34,7 +34,7 @@ export default function LandingPage() {
             We do <span className="text-[#C9B370]">Everything.</span>
           </h1>
           <p className="text-lg md:text-xl text-silver-300 max-w-2xl mb-12">
-            Comprehensive estate management for those who expect nothing less than exceptional.
+            Private estate operations for those who expect nothing less than exceptional.
           </p>
           <button
             onClick={scrollToNext}
