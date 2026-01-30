@@ -2,6 +2,7 @@
 
 import { useAuth } from '@/lib/auth-context';
 import { mockSystemStatus, mockIncidents } from '@/data/mockData';
+import { Icon } from '@/components/icons';
 
 const demoZones = [
   { name: 'Main Entrance', status: 'armed', cameras: 4, sensors: 6 },
@@ -189,16 +190,16 @@ export default function SecurityPage() {
         <p className="overline mb-4">Quick Actions</p>
         <div className="flex gap-3">
           {[
-            { label: 'Lock All Doors', icon: '🔒' },
-            { label: 'Arm Perimeter', icon: '🛡️' },
-            { label: 'Night Lockdown', icon: '🌙' },
-            { label: 'Review Cameras', icon: '📹' },
+            { label: 'Lock All Doors', icon: 'lock' },
+            { label: 'Arm Perimeter', icon: 'shield' },
+            { label: 'Night Lockdown', icon: 'moon' },
+            { label: 'Review Cameras', icon: 'videocam' },
           ].map((action) => (
             <button
               key={action.label}
               className="flex items-center gap-2 px-4 py-2.5 bg-surface-elevated border border-border rounded-lg hover:border-[#C9B370]/30 transition-colors group"
             >
-              <span className="text-lg group-hover:scale-110 transition-transform">{action.icon}</span>
+              <span className="text-silver-400 group-hover:text-[#C9B370] group-hover:scale-110 transition-all"><Icon name={action.icon} className="w-4 h-4" /></span>
               <span className="text-sm text-silver-300 group-hover:text-text transition-colors">{action.label}</span>
             </button>
           ))}

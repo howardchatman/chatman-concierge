@@ -3,6 +3,7 @@
 import { useState } from 'react';
 import { useAuth } from '@/lib/auth-context';
 import { mockSystemStatus } from '@/data/mockData';
+import { Icon } from '@/components/icons';
 
 export default function TopBar() {
   const [showQuickActions, setShowQuickActions] = useState(false);
@@ -79,16 +80,16 @@ export default function TopBar() {
                   </div>
                   <div className="p-2">
                     {[
-                      { icon: '🏠', label: 'On my way home', desc: 'Prep arrival settings' },
-                      { icon: '🌙', label: 'Night Lockdown', desc: 'Secure all zones' },
-                      { icon: '🍷', label: 'Entertain Mode', desc: 'Guest settings' },
-                      { icon: '✈️', label: 'Travel Mode', desc: 'Extended absence' },
+                      { icon: 'home', label: 'On my way home', desc: 'Prep arrival settings' },
+                      { icon: 'moon', label: 'Night Lockdown', desc: 'Secure all zones' },
+                      { icon: 'wine', label: 'Entertain Mode', desc: 'Guest settings' },
+                      { icon: 'plane', label: 'Travel Mode', desc: 'Extended absence' },
                     ].map((action) => (
                       <button
                         key={action.label}
                         className="w-full flex items-center gap-3 p-3 rounded-lg hover:bg-surface-overlay transition-colors text-left group"
                       >
-                        <span className="text-xl group-hover:scale-110 transition-transform">{action.icon}</span>
+                        <span className="text-silver-400 group-hover:text-[#C9B370] group-hover:scale-110 transition-all"><Icon name={action.icon} className="w-5 h-5" /></span>
                         <div>
                           <p className="text-sm text-text font-medium group-hover:text-[#C9B370] transition-colors">{action.label}</p>
                           <p className="text-xs text-silver-500">{action.desc}</p>

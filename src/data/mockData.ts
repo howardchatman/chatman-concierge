@@ -212,7 +212,7 @@ export const mockScenes: Scene[] = [
     name: 'Arrival',
     type: 'arrival',
     description: 'Welcome home settings',
-    icon: '🏠',
+    icon: 'home',
     actions: [
       { system: 'lighting', action: 'set', value: 'warm-welcome' },
       { system: 'climate', action: 'set', value: 72 },
@@ -225,7 +225,7 @@ export const mockScenes: Scene[] = [
     name: 'Entertain',
     type: 'entertain',
     description: 'Guest entertainment mode',
-    icon: '🍷',
+    icon: 'wine',
     actions: [
       { system: 'lighting', action: 'set', value: 'ambient-evening' },
       { system: 'audio', action: 'set', value: 'background-jazz' },
@@ -237,7 +237,7 @@ export const mockScenes: Scene[] = [
     name: 'Night Lockdown',
     type: 'night-lockdown',
     description: 'Full security activation',
-    icon: '🌙',
+    icon: 'moon',
     actions: [
       { system: 'security', action: 'arm', value: 'all-zones' },
       { system: 'lighting', action: 'set', value: 'night-path' },
@@ -249,7 +249,7 @@ export const mockScenes: Scene[] = [
     name: 'Travel Mode',
     type: 'travel',
     description: 'Extended absence settings',
-    icon: '✈️',
+    icon: 'plane',
     actions: [
       { system: 'security', action: 'arm', value: 'vacation-mode' },
       { system: 'climate', action: 'set', value: 'eco' },
@@ -261,7 +261,7 @@ export const mockScenes: Scene[] = [
     name: 'Storm Mode',
     type: 'storm-mode',
     description: 'Weather protection protocol',
-    icon: '⛈️',
+    icon: 'storm',
     actions: [
       { system: 'shades', action: 'close', value: 'hurricane-shutters' },
       { system: 'security', action: 'activate', value: 'storm-sensors' },
@@ -276,7 +276,7 @@ export const mockActivity: ActivityItem[] = [
     title: 'AI Concierge filtered vendor call',
     description: 'Blocked unsolicited sales call from "Solar Solutions Inc."',
     timestamp: '10 minutes ago',
-    icon: '🤖',
+    icon: 'ai',
   },
   {
     id: 'act-2',
@@ -284,7 +284,7 @@ export const mockActivity: ActivityItem[] = [
     title: 'Pool service completed',
     description: 'Aqua Elite Services submitted proof-of-work with before/after photos.',
     timestamp: '2 hours ago',
-    icon: '🏊',
+    icon: 'pool',
     actionable: true,
     actionLabel: 'Review Photos',
   },
@@ -294,7 +294,7 @@ export const mockActivity: ActivityItem[] = [
     title: 'Invoice awaiting approval',
     description: 'Verde Gardens - January Landscape Maintenance - $2,800',
     timestamp: '3 hours ago',
-    icon: '📄',
+    icon: 'document',
     actionable: true,
     actionLabel: 'Approve & Pay',
   },
@@ -304,7 +304,7 @@ export const mockActivity: ActivityItem[] = [
     title: 'Perimeter check complete',
     description: 'All 24 entry points verified secure. No anomalies detected.',
     timestamp: '4 hours ago',
-    icon: '🛡️',
+    icon: 'shield',
   },
   {
     id: 'act-5',
@@ -312,7 +312,7 @@ export const mockActivity: ActivityItem[] = [
     title: 'Climate adjusted automatically',
     description: 'Temperature set to 72°F based on arrival prediction.',
     timestamp: '5 hours ago',
-    icon: '🌡️',
+    icon: 'thermometer',
   },
 ];
 
@@ -321,24 +321,24 @@ export const suggestedActions = [
     id: 'sug-1',
     title: 'On my way home',
     description: 'Set temp to 72°F, lights to warm, play jazz in living room',
-    icon: '🏠',
+    icon: 'home',
   },
   {
     id: 'sug-2',
     title: 'Schedule plumber',
     description: 'Guest bath leak repair - Premier Plumbing available tomorrow',
-    icon: '🔧',
+    icon: 'wrench',
   },
   {
     id: 'sug-3',
     title: 'Review pool service',
     description: 'Before/after photos ready for approval',
-    icon: '📸',
+    icon: 'camera',
   },
   {
     id: 'sug-4',
     title: 'Approve landscape invoice',
     description: 'Verde Gardens - $2,800 from maintenance budget',
-    icon: '✅',
+    icon: 'check',
   },
 ];

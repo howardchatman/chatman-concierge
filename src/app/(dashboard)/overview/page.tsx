@@ -2,6 +2,7 @@
 
 import { useAuth } from '@/lib/auth-context';
 import { mockSystemStatus, mockIncidents, mockRequests, mockActivity } from '@/data/mockData';
+import { Icon } from '@/components/icons';
 
 export default function OverviewPage() {
   const { user, isDemo, isLoading } = useAuth();
@@ -156,7 +157,7 @@ export default function OverviewPage() {
             {activity.length > 0 ? (
               activity.slice(0, 3).map((act) => (
                 <div key={act.id} className="flex items-start gap-3 p-3 bg-surface-elevated rounded-lg">
-                  <span className="text-lg">{act.icon}</span>
+                  <span className="text-silver-400"><Icon name={act.icon || 'document'} className="w-5 h-5" /></span>
                   <div className="flex-1 min-w-0">
                     <p className="text-sm text-text truncate">{act.title}</p>
                     <p className="text-xs text-silver-600">{act.timestamp}</p>

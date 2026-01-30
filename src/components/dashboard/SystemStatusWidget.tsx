@@ -1,14 +1,15 @@
 'use client';
 
 import { mockSystemStatus } from '@/data/mockData';
+import { Icon } from '@/components/icons';
 
 export default function SystemStatusWidget() {
   const status = mockSystemStatus;
 
   const systems = [
-    { name: 'Power', status: status.power, icon: '⚡' },
-    { name: 'Water', status: status.water, icon: '💧' },
-    { name: 'Fire Safety', status: status.fire, icon: '🔥' },
+    { name: 'Power', status: status.power, icon: 'bolt' },
+    { name: 'Water', status: status.water, icon: 'droplet' },
+    { name: 'Fire Safety', status: status.fire, icon: 'fire' },
   ];
 
   const getStatusColor = (status: string) => {
@@ -40,7 +41,7 @@ export default function SystemStatusWidget() {
             className="flex items-center justify-between p-3 rounded-lg bg-surface border border-border"
           >
             <div className="flex items-center gap-3">
-              <span className="text-lg">{system.icon}</span>
+              <span className="text-silver-400"><Icon name={system.icon} className="w-4 h-4" /></span>
               <span className="text-sm text-text">{system.name}</span>
             </div>
             <div className="flex items-center gap-2">

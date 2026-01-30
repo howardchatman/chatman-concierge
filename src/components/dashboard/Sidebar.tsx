@@ -92,14 +92,12 @@ export default function Sidebar() {
       {/* Logo */}
       <div className="p-6 border-b border-border">
         <Link href="/overview" className="flex items-center gap-3">
-          <div className="w-10 h-10 rounded-xl bg-surface-elevated border border-border-light flex items-center justify-center">
-            <svg className="w-5 h-5 text-[#C9B370]" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.5}>
-              <path strokeLinecap="round" strokeLinejoin="round" d="M3.75 21h16.5M4.5 3h15M5.25 3v18m13.5-18v18M9 6.75h1.5m-1.5 3h1.5m-1.5 3h1.5m3-6H15m-1.5 3H15m-1.5 3H15M9 21v-3.375c0-.621.504-1.125 1.125-1.125h3.75c.621 0 1.125.504 1.125 1.125V21" />
-            </svg>
+          <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-[#C9B370] to-[#A89355] flex items-center justify-center shadow-[0_2px_8px_rgba(201,179,112,0.25)]">
+            <span className="text-obsidian font-serif text-sm font-bold tracking-tight leading-none">CC</span>
           </div>
           <div>
             <p className="font-serif text-lg text-text leading-tight">Chatman</p>
-            <p className="text-xs text-silver-500">Concierge</p>
+            <p className="text-[11px] text-[#C9B370]/70 tracking-[0.15em] uppercase font-medium">Concierge</p>
           </div>
         </Link>
       </div>
