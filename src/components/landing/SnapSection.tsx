@@ -79,7 +79,9 @@ export default function SnapSection({
 
       {/* Content */}
       <div
-        className="relative z-10 w-full h-full flex flex-col items-center justify-center"
+        className={`relative z-10 w-full h-full flex flex-col items-center ${
+          className.includes('snap-section-scroll') ? 'justify-start' : 'justify-center'
+        }`}
         style={{
           opacity: isVisible ? 1 : 0,
           transform: isVisible ? 'translateY(0)' : 'translateY(40px)',

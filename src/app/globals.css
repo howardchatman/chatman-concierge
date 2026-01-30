@@ -327,6 +327,12 @@ input, textarea, select {
   flex-direction: column;
 }
 
+/* Allow contact/form sections to grow beyond viewport and scroll */
+.snap-section.snap-section-scroll {
+  height: auto;
+  overflow-y: auto;
+}
+
 /* Landing Hero Typography */
 .hero-display {
   font-family: 'Instrument Serif', Georgia, serif;

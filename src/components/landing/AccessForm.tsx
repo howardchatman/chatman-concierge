@@ -105,20 +105,20 @@ export default function AccessForm() {
   }
 
   return (
-    <form onSubmit={handleSubmit} className="space-y-6">
+    <form onSubmit={handleSubmit} className="space-y-4 md:space-y-6">
 
       {/* ── Contact Information ──────────────────────────────── */}
       <div>
-        <p className="text-[11px] font-medium text-silver-300 uppercase tracking-widest mb-4">
+        <p className="text-[11px] font-medium text-silver-300 uppercase tracking-widest mb-3">
           Contact
         </p>
-        <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+        <div className="grid grid-cols-2 gap-2.5">
           <input
             type="text"
             required
             value={formData.firstName}
             onChange={e => updateField('firstName', e.target.value)}
-            className="input text-sm py-2.5"
+            className="input text-sm py-2"
             placeholder="First Name"
           />
           <input
@@ -126,7 +126,7 @@ export default function AccessForm() {
             required
             value={formData.lastName}
             onChange={e => updateField('lastName', e.target.value)}
-            className="input text-sm py-2.5"
+            className="input text-sm py-2"
             placeholder="Last Name"
           />
           <input
@@ -134,7 +134,7 @@ export default function AccessForm() {
             required
             value={formData.phone}
             onChange={e => updateField('phone', e.target.value)}
-            className="input text-sm py-2.5"
+            className="input text-sm py-2"
             placeholder="Phone"
           />
           <input
@@ -142,7 +142,7 @@ export default function AccessForm() {
             required
             value={formData.email}
             onChange={e => updateField('email', e.target.value)}
-            className="input text-sm py-2.5"
+            className="input text-sm py-2"
             placeholder="Email"
           />
         </div>
@@ -185,10 +185,10 @@ export default function AccessForm() {
 
       {/* ── Household ────────────────────────────────────────── */}
       <div>
-        <p className="text-[11px] font-medium text-silver-300 uppercase tracking-widest mb-4">
+        <p className="text-[11px] font-medium text-silver-300 uppercase tracking-widest mb-3">
           Household
         </p>
-        <div className="space-y-4">
+        <div className="space-y-3">
           {/* Pets */}
           <div className="flex items-center justify-between">
             <span className="text-sm text-silver-200">Pets?</span>
@@ -285,7 +285,7 @@ export default function AccessForm() {
         <p className="text-[11px] font-medium text-silver-300 uppercase tracking-widest mb-1">
           Estates / Assets Under Oversight
         </p>
-        <p className="text-[10px] text-silver-600 mb-4">Properties or locations where you need concierge presence</p>
+        <p className="text-[10px] text-silver-600 mb-2.5">Properties or locations where you need concierge presence</p>
         <div className="flex gap-2">
           {[
             { label: '1', value: '1' },
@@ -313,10 +313,10 @@ export default function AccessForm() {
 
       {/* ── Preferences ──────────────────────────────────────── */}
       <div>
-        <p className="text-[11px] font-medium text-silver-300 uppercase tracking-widest mb-4">
+        <p className="text-[11px] font-medium text-silver-300 uppercase tracking-widest mb-3">
           Preferences
         </p>
-        <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 mb-5">
+        <div className="grid grid-cols-2 gap-2.5 mb-4">
           <div>
             <p className="text-xs text-silver-300 mb-1.5">&ldquo;Don&apos;t call me&rdquo; hour</p>
             <select
@@ -364,7 +364,7 @@ export default function AccessForm() {
               key={option.value}
               type="button"
               onClick={() => updateField('estatePersonality', option.value)}
-              className={`text-left p-3 rounded-xl border transition-all ${
+              className={`text-left p-2.5 rounded-xl border transition-all ${
                 formData.estatePersonality === option.value
                   ? 'border-[#C9B370]/40 bg-[#C9B370]/5'
                   : 'border-border/60 hover:border-border-light bg-transparent'
@@ -400,16 +400,12 @@ export default function AccessForm() {
         )}
       </button>
 
-      <div className="text-center space-y-1.5">
-        <p className="text-[11px] text-silver-500 italic">
-          Discretion is standard. We&apos;ll respond privately.
-        </p>
-        <p className="text-[10px] text-silver-700">
-          <a href="#" className="hover:text-silver-500 transition-colors">Privacy</a>
-          {' '}&middot;{' '}
-          <a href="#" className="hover:text-silver-500 transition-colors">Terms</a>
-        </p>
-      </div>
+      <p className="text-center text-[10px] text-silver-600">
+        Discretion is standard.{' '}
+        <a href="#" className="hover:text-silver-400 transition-colors">Privacy</a>
+        {' '}&middot;{' '}
+        <a href="#" className="hover:text-silver-400 transition-colors">Terms</a>
+      </p>
     </form>
   );
 }
