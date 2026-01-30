@@ -12,6 +12,12 @@ export async function POST() {
       name: "Howard",
       role: "admin",
     },
+    {
+      email: "demo@chatmanconcierge.com",
+      password: "demo1234",
+      name: "Alexander Hartwell",
+      role: "customer",
+    },
   ];
 
   try {

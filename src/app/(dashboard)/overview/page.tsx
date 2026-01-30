@@ -1,9 +1,26 @@
 'use client';
 
+import { useAuth } from '@/lib/auth-context';
 import { mockSystemStatus, mockIncidents, mockRequests, mockActivity } from '@/data/mockData';
 
 export default function OverviewPage() {
-  const pendingRequests = mockRequests.filter(r => r.status === 'pending');
+  const { user, isDemo, isLoading } = useAuth();
+
+  if (isLoading) {
+    return (
+      <div className="flex items-center justify-center h-64">
+        <div className="w-8 h-8 border-2 border-[#C9B370]/30 border-t-[#C9B370] rounded-full animate-spin" />
+      </div>
+    );
+  }
+
+  const firstName = user?.name?.split(' ')[0] || 'Welcome';
+
+  // Demo user sees mock data, real users see empty state
+  const incidents = isDemo ? mockIncidents : [];
+  const pendingRequests = isDemo ? mockRequests.filter(r => r.status === 'pending') : [];
+  const activity = isDemo ? mockActivity : [];
+  const systemStatus = isDemo ? mockSystemStatus : null;
 
   return (
     <div className="space-y-6">
@@ -11,7 +28,7 @@ export default function OverviewPage() {
       <div className="flex items-end justify-between">
         <div>
           <p className="overline mb-1">Good afternoon</p>
-          <h1 className="text-headline font-serif text-text">Alexander</h1>
+          <h1 className="text-headline font-serif text-text">{firstName}</h1>
         </div>
         <div className="flex items-center gap-2">
           <span className="text-xs text-silver-600">Last updated</span>
@@ -20,39 +37,54 @@ export default function OverviewPage() {
       </div>
 
       {/* Quick Stats */}
-      <div className="grid grid-cols-4 gap-4">
-        <div className="bg-surface border border-border rounded-xl p-5">
-          <div className="flex items-center justify-between mb-3">
-            <span className="text-xs text-silver-500 uppercase tracking-wide">Perimeter</span>
-            <span className="w-2 h-2 rounded-full bg-status-secure shadow-[0_0_6px_rgba(74,222,128,0.5)]" />
+      {systemStatus ? (
+        <div className="grid grid-cols-4 gap-4">
+          <div className="bg-surface border border-border rounded-xl p-5">
+            <div className="flex items-center justify-between mb-3">
+              <span className="text-xs text-silver-500 uppercase tracking-wide">Perimeter</span>
+              <span className="w-2 h-2 rounded-full bg-status-secure shadow-[0_0_6px_rgba(74,222,128,0.5)]" />
+            </div>
+            <p className="text-2xl font-serif text-status-secure">Secure</p>
+            <p className="text-xs text-silver-600 mt-1">All zones armed</p>
           </div>
-          <p className="text-2xl font-serif text-status-secure">Secure</p>
-          <p className="text-xs text-silver-600 mt-1">All zones armed</p>
-        </div>
-        <div className="bg-surface border border-border rounded-xl p-5">
-          <div className="flex items-center justify-between mb-3">
-            <span className="text-xs text-silver-500 uppercase tracking-wide">Doors</span>
-            <span className="w-2 h-2 rounded-full bg-status-warning" />
+          <div className="bg-surface border border-border rounded-xl p-5">
+            <div className="flex items-center justify-between mb-3">
+              <span className="text-xs text-silver-500 uppercase tracking-wide">Doors</span>
+              <span className="w-2 h-2 rounded-full bg-status-warning" />
+            </div>
+            <p className="text-2xl font-serif text-text">{systemStatus.doors.locked}/{systemStatus.doors.total}</p>
+            <p className="text-xs text-silver-600 mt-1">{systemStatus.doors.open} open</p>
           </div>
-          <p className="text-2xl font-serif text-text">{mockSystemStatus.doors.locked}/{mockSystemStatus.doors.total}</p>
-          <p className="text-xs text-silver-600 mt-1">{mockSystemStatus.doors.open} open</p>
-        </div>
-        <div className="bg-surface border border-border rounded-xl p-5">
-          <div className="flex items-center justify-between mb-3">
-            <span className="text-xs text-silver-500 uppercase tracking-wide">Cameras</span>
-            <span className={`w-2 h-2 rounded-full ${mockSystemStatus.cameras.offline > 0 ? 'bg-status-warning' : 'bg-status-secure'}`} />
+          <div className="bg-surface border border-border rounded-xl p-5">
+            <div className="flex items-center justify-between mb-3">
+              <span className="text-xs text-silver-500 uppercase tracking-wide">Cameras</span>
+              <span className={`w-2 h-2 rounded-full ${systemStatus.cameras.offline > 0 ? 'bg-status-warning' : 'bg-status-secure'}`} />
+            </div>
+            <p className="text-2xl font-serif text-text">{systemStatus.cameras.online}/{systemStatus.cameras.total}</p>
+            <p className="text-xs text-silver-600 mt-1">{systemStatus.cameras.offline} offline</p>
           </div>
-          <p className="text-2xl font-serif text-text">{mockSystemStatus.cameras.online}/{mockSystemStatus.cameras.total}</p>
-          <p className="text-xs text-silver-600 mt-1">{mockSystemStatus.cameras.offline} offline</p>
-        </div>
-        <div className="bg-surface border border-border rounded-xl p-5">
-          <div className="flex items-center justify-between mb-3">
-            <span className="text-xs text-silver-500 uppercase tracking-wide">Climate</span>
+          <div className="bg-surface border border-border rounded-xl p-5">
+            <div className="flex items-center justify-between mb-3">
+              <span className="text-xs text-silver-500 uppercase tracking-wide">Climate</span>
+            </div>
+            <p className="text-2xl font-serif text-text">{systemStatus.climate.temperature}°F</p>
+            <p className="text-xs text-silver-600 mt-1 capitalize">{systemStatus.climate.mode}</p>
           </div>
-          <p className="text-2xl font-serif text-text">{mockSystemStatus.climate.temperature}°F</p>
-          <p className="text-xs text-silver-600 mt-1 capitalize">{mockSystemStatus.climate.mode}</p>
         </div>
-      </div>
+      ) : (
+        <div className="grid grid-cols-4 gap-4">
+          {['Perimeter', 'Doors', 'Cameras', 'Climate'].map((label) => (
+            <div key={label} className="bg-surface border border-border rounded-xl p-5">
+              <div className="flex items-center justify-between mb-3">
+                <span className="text-xs text-silver-500 uppercase tracking-wide">{label}</span>
+                <span className="w-2 h-2 rounded-full bg-silver-600" />
+              </div>
+              <p className="text-2xl font-serif text-silver-600">—</p>
+              <p className="text-xs text-silver-600 mt-1">No data yet</p>
+            </div>
+          ))}
+        </div>
+      )}
 
       {/* Two Column Layout */}
       <div className="grid grid-cols-2 gap-6">
@@ -75,19 +107,23 @@ export default function OverviewPage() {
             </a>
           </div>
           <div className="space-y-2">
-            {mockIncidents.slice(0, 3).map((incident) => (
-              <div key={incident.id} className="flex items-center gap-3 p-3 bg-surface-elevated rounded-lg">
-                <span className={`w-2 h-2 rounded-full ${
-                  incident.severity === 'resolved' ? 'bg-status-secure' :
-                  incident.severity === 'warning' ? 'bg-status-warning' :
-                  'bg-status-info'
-                }`} />
-                <div className="flex-1 min-w-0">
-                  <p className="text-sm text-text truncate">{incident.title}</p>
-                  <p className="text-xs text-silver-600">{new Date(incident.timestamp).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}</p>
+            {incidents.length > 0 ? (
+              incidents.slice(0, 3).map((incident) => (
+                <div key={incident.id} className="flex items-center gap-3 p-3 bg-surface-elevated rounded-lg">
+                  <span className={`w-2 h-2 rounded-full ${
+                    incident.severity === 'resolved' ? 'bg-status-secure' :
+                    incident.severity === 'warning' ? 'bg-status-warning' :
+                    'bg-status-info'
+                  }`} />
+                  <div className="flex-1 min-w-0">
+                    <p className="text-sm text-text truncate">{incident.title}</p>
+                    <p className="text-xs text-silver-600">{new Date(incident.timestamp).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}</p>
+                  </div>
                 </div>
-              </div>
-            ))}
+              ))
+            ) : (
+              <p className="text-sm text-silver-500 text-center py-6">No incidents recorded</p>
+            )}
           </div>
         </div>
 
@@ -117,20 +153,24 @@ export default function OverviewPage() {
             </div>
           </div>
           <div className="space-y-2">
-            {mockActivity.slice(0, 3).map((activity) => (
-              <div key={activity.id} className="flex items-start gap-3 p-3 bg-surface-elevated rounded-lg">
-                <span className="text-lg">{activity.icon}</span>
-                <div className="flex-1 min-w-0">
-                  <p className="text-sm text-text truncate">{activity.title}</p>
-                  <p className="text-xs text-silver-600">{activity.timestamp}</p>
+            {activity.length > 0 ? (
+              activity.slice(0, 3).map((act) => (
+                <div key={act.id} className="flex items-start gap-3 p-3 bg-surface-elevated rounded-lg">
+                  <span className="text-lg">{act.icon}</span>
+                  <div className="flex-1 min-w-0">
+                    <p className="text-sm text-text truncate">{act.title}</p>
+                    <p className="text-xs text-silver-600">{act.timestamp}</p>
+                  </div>
+                  {act.actionable && (
+                    <button className="text-xs text-[#C9B370] hover:text-[#D4C28A] transition-colors whitespace-nowrap">
+                      {act.actionLabel}
+                    </button>
+                  )}
                 </div>
-                {activity.actionable && (
-                  <button className="text-xs text-[#C9B370] hover:text-[#D4C28A] transition-colors whitespace-nowrap">
-                    {activity.actionLabel}
-                  </button>
-                )}
-              </div>
-            ))}
+              ))
+            ) : (
+              <p className="text-sm text-silver-500 text-center py-6">No recent activity</p>
+            )}
           </div>
         </div>
       </div>
@@ -146,8 +186,10 @@ export default function OverviewPage() {
           <div className="flex-1">
             <h3 className="font-serif text-lg text-text mb-1">AI Concierge Insight</h3>
             <p className="text-sm text-silver-400 mb-3">
-              Based on your schedule, I've pre-conditioned the master suite to 72°F and queued your preferred evening playlist.
-              The landscaping crew finished early — photos are ready for your review.
+              {isDemo
+                ? "Based on your schedule, I've pre-conditioned the master suite to 72°F and queued your preferred evening playlist. The landscaping crew finished early — photos are ready for your review."
+                : "Your AI concierge is active and monitoring your properties. As data flows in, insights will appear here."
+              }
             </p>
             <div className="flex gap-3">
               <button className="text-xs text-silver-400 hover:text-text transition-colors">View Details</button>

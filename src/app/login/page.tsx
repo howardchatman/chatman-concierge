@@ -15,11 +15,26 @@ export default function LoginPage() {
     setIsLoading(true);
     setError('');
 
-    // Simulate authentication
-    await new Promise(resolve => setTimeout(resolve, 1200));
+    try {
+      const res = await fetch('/api/auth/login', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ email, password }),
+      });
 
-    // TODO: Replace with real auth — route to /estates if multiple, /overview if one
-    router.push('/estates');
+      const data = await res.json();
+
+      if (!res.ok || !data.success) {
+        setError(data.error || 'Invalid email or password');
+        return;
+      }
+
+      router.push('/estates');
+    } catch {
+      setError('Unable to connect. Please try again.');
+    } finally {
+      setIsLoading(false);
+    }
   };
 
   return (

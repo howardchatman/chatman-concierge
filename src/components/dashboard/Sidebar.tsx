@@ -2,6 +2,7 @@
 
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
+import { useAuth } from '@/lib/auth-context';
 
 const navigation = [
   {
@@ -71,6 +72,11 @@ const secondaryNavigation = [
 
 export default function Sidebar() {
   const pathname = usePathname();
+  const { user, isDemo, logout } = useAuth();
+
+  const displayName = user?.name || user?.email?.split('@')[0] || 'User';
+  const initials = displayName.split(' ').map(n => n[0]).join('').toUpperCase().slice(0, 2);
+  const estateName = isDemo ? 'Palm Beach Residence' : 'Estate Dashboard';
 
   return (
     <aside className="fixed left-0 top-0 bottom-0 w-64 bg-surface border-r border-border flex flex-col z-40">
@@ -174,16 +180,25 @@ export default function Sidebar() {
           className="flex items-center gap-3 px-4 py-3 rounded-xl text-sm transition-all duration-200 text-silver-400 hover:text-text hover:bg-surface-elevated group"
         >
           <div className="w-8 h-8 rounded-lg bg-surface-overlay border border-border flex items-center justify-center text-xs font-medium text-silver-300 group-hover:border-[#C9B370]/30">
-            AH
+            {initials}
           </div>
           <div className="flex-1 min-w-0">
-            <p className="text-silver-200 text-sm truncate">Alexander Hartwell</p>
-            <p className="text-silver-600 text-xs truncate">Palm Beach Residence</p>
+            <p className="text-silver-200 text-sm truncate">{displayName}</p>
+            <p className="text-silver-600 text-xs truncate">{estateName}</p>
           </div>
           <svg className="w-4 h-4 text-silver-600" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
             <path strokeLinecap="round" strokeLinejoin="round" d="M8.25 15L12 18.75 15.75 15m-7.5-6L12 5.25 15.75 9" />
           </svg>
         </Link>
+        <button
+          onClick={logout}
+          className="w-full mt-1 flex items-center gap-3 px-4 py-2 rounded-xl text-xs text-silver-600 hover:text-silver-400 hover:bg-surface-elevated transition-all"
+        >
+          <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.5}>
+            <path strokeLinecap="round" strokeLinejoin="round" d="M15.75 9V5.25A2.25 2.25 0 0013.5 3h-6a2.25 2.25 0 00-2.25 2.25v13.5A2.25 2.25 0 007.5 21h6a2.25 2.25 0 002.25-2.25V15m3 0l3-3m0 0l-3-3m3 3H9" />
+          </svg>
+          Sign Out
+        </button>
       </div>
     </aside>
   );

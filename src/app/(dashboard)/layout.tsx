@@ -2,6 +2,7 @@
 
 import Sidebar from '@/components/dashboard/Sidebar';
 import TopBar from '@/components/dashboard/TopBar';
+import { AuthProvider } from '@/lib/auth-context';
 
 export default function DashboardLayout({
   children,
@@ -9,14 +10,16 @@ export default function DashboardLayout({
   children: React.ReactNode;
 }) {
   return (
-    <div className="min-h-screen bg-obsidian">
-      <Sidebar />
-      <TopBar />
-      <main className="ml-64 pt-16 min-h-screen">
-        <div className="p-6">
-          {children}
-        </div>
-      </main>
-    </div>
+    <AuthProvider>
+      <div className="min-h-screen bg-obsidian">
+        <Sidebar />
+        <TopBar />
+        <main className="ml-64 pt-16 min-h-screen">
+          <div className="p-6">
+            {children}
+          </div>
+        </main>
+      </div>
+    </AuthProvider>
   );
 }
