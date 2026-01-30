@@ -1,6 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server';
 
-const PROTECTED_PATHS = ['/estates', '/overview', '/security', '/staff', '/scope', '/vendors', '/budgets', '/settings'];
+const PROTECTED_PATHS = ['/estates', '/overview', '/security', '/staff', '/scope', '/vendors', '/budgets', '/settings', '/leads'];
 
 export function middleware(request: NextRequest) {
   const hostname = request.headers.get('host') || '';
@@ -27,5 +27,5 @@ export function middleware(request: NextRequest) {
 }
 
 export const config = {
-  matcher: ['/', '/estates/:path*', '/overview/:path*', '/security/:path*', '/staff/:path*', '/scope/:path*', '/vendors/:path*', '/budgets/:path*', '/settings/:path*'],
+  matcher: ['/', '/estates/:path*', '/overview/:path*', '/security/:path*', '/staff/:path*', '/scope/:path*', '/vendors/:path*', '/budgets/:path*', '/settings/:path*', '/leads/:path*'],
 };
