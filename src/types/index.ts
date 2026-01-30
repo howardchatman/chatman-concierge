@@ -54,13 +54,20 @@ export interface Request {
 export interface Vendor {
   id: string;
   name: string;
-  category: 'pool' | 'landscaping' | 'hvac' | 'plumbing' | 'electrical' | 'cleaning' | 'other';
+  company?: string;
+  category: 'pool' | 'landscaping' | 'hvac' | 'plumbing' | 'electrical' | 'cleaning' | 'catering' | 'security' | 'other';
   contact: string;
   email: string;
   phone: string;
   rating: number;
   lastService?: string;
   notes?: string;
+  license?: string;
+  insurance?: string;
+  address?: string;
+  status?: 'active' | 'inactive' | 'preferred';
+  created_at?: string;
+  updated_at?: string;
 }
 
 export interface Budget {

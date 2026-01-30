@@ -16,8 +16,8 @@ export default function DashboardLayout({
         <div className="min-h-screen bg-obsidian">
           <Sidebar />
           <TopBar />
-          <main className="ml-64 pt-16 min-h-screen">
-            <div className="p-6">
+          <main className="md:ml-64 pt-16 min-h-screen">
+            <div className="p-4 md:p-6">
               {children}
             </div>
           </main>

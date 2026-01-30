@@ -7,6 +7,7 @@ export interface EstateProfile {
   id: string;
   name: string;
   address: string;
+  coverImage: string;
   status: 'secure' | 'away' | 'at-home' | 'alert';
   sqft: string;
   bedrooms: number;
@@ -28,6 +29,7 @@ const palmBeach: EstateProfile = {
   id: 'palm-beach',
   name: 'Palm Beach Residence',
   address: '1200 South Ocean Boulevard, Palm Beach, FL',
+  coverImage: '/cc_h1.png',
   status: 'secure',
   sqft: '18,500',
   bedrooms: 7,
@@ -128,6 +130,7 @@ const aspenLodge: EstateProfile = {
   id: 'aspen-lodge',
   name: 'Aspen Mountain Lodge',
   address: '500 Little Nell Road, Aspen, CO',
+  coverImage: '/cc_h3.png',
   status: 'away',
   sqft: '12,200',
   bedrooms: 5,
@@ -213,6 +216,7 @@ const manhattanPenthouse: EstateProfile = {
   id: 'manhattan-penthouse',
   name: 'Manhattan Penthouse',
   address: '432 Park Avenue, New York, NY',
+  coverImage: '/cc_h5.png',
   status: 'secure',
   sqft: '8,400',
   bedrooms: 4,

@@ -13,8 +13,8 @@ export default function TopBar() {
   const temperature = isDemo && estate ? estate.systemStatus.climate.temperature : null;
 
   return (
-    <header className="fixed top-0 left-64 right-0 h-16 bg-surface/80 backdrop-blur-md border-b border-border z-30">
-      <div className="h-full px-6 flex items-center justify-between">
+    <header className="fixed top-0 left-0 md:left-64 right-0 h-16 bg-surface/80 backdrop-blur-md border-b border-border z-30">
+      <div className="h-full px-4 md:px-6 flex items-center justify-between">
         {/* Left: Page Context */}
         <div className="flex items-center gap-4">
           <div>

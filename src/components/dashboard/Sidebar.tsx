@@ -90,17 +90,15 @@ export default function Sidebar() {
   const estateName = isDemo && estate ? estate.name : 'Estate Dashboard';
 
   return (
-    <aside className="fixed left-0 top-0 bottom-0 w-64 bg-surface border-r border-border flex flex-col z-40">
+    <aside className="hidden md:flex fixed left-0 top-0 bottom-0 w-64 bg-surface border-r border-border flex-col z-40">
       {/* Logo */}
-      <div className="p-6 border-b border-border">
-        <Link href="/overview" className="flex items-center gap-3">
-          <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-[#C9B370] to-[#A89355] flex items-center justify-center shadow-[0_2px_8px_rgba(201,179,112,0.25)]">
-            <span className="text-obsidian font-serif text-sm font-bold tracking-tight leading-none">CC</span>
-          </div>
-          <div>
-            <p className="font-serif text-lg text-text leading-tight">Chatman</p>
-            <p className="text-[11px] text-[#C9B370]/70 tracking-[0.15em] uppercase font-medium">Concierge</p>
-          </div>
+      <div className="px-5 py-4 border-b border-border">
+        <Link href="/overview" className="block">
+          <img
+            src="/cc_logo_wide.png"
+            alt="Chatman Concierge"
+            className="h-10 w-auto"
+          />
         </Link>
       </div>
 

@@ -296,3 +296,115 @@ export async function getCallLogs() {
   if (error) throw error;
   return data;
 }
+
+// ============================================
+// VENDOR FUNCTIONS
+// ============================================
+
+export interface VendorRecord {
+  id?: string;
+  name: string;
+  company?: string;
+  category: string;
+  contact: string;
+  email: string;
+  phone: string;
+  rating?: number;
+  last_service?: string;
+  notes?: string;
+  license?: string;
+  insurance?: string;
+  address?: string;
+  status?: "active" | "inactive" | "preferred";
+  created_at?: string;
+  updated_at?: string;
+}
+
+export async function createVendor(vendor: VendorRecord) {
+  const { data, error } = await supabaseAdmin
+    .from("security_vendors")
+    .insert([
+      {
+        name: vendor.name,
+        company: vendor.company || null,
+        category: vendor.category || "other",
+        contact: vendor.contact,
+        email: vendor.email,
+        phone: vendor.phone,
+        rating: vendor.rating || 3,
+        notes: vendor.notes || null,
+        license: vendor.license || null,
+        insurance: vendor.insurance || null,
+        address: vendor.address || null,
+        status: vendor.status || "active",
+      },
+    ])
+    .select()
+    .single();
+
+  if (error) throw error;
+  return data;
+}
+
+export async function getVendors(category?: string) {
+  let query = supabaseAdmin
+    .from("security_vendors")
+    .select("*")
+    .order("rating", { ascending: false })
+    .order("name", { ascending: true });
+
+  if (category) {
+    query = query.eq("category", category);
+  }
+
+  const { data, error } = await query;
+  if (error) throw error;
+  return data;
+}
+
+export async function updateVendor(id: string, updates: Partial<VendorRecord>) {
+  const { data, error } = await supabaseAdmin
+    .from("security_vendors")
+    .update({ ...updates, updated_at: new Date().toISOString() })
+    .eq("id", id)
+    .select()
+    .single();
+
+  if (error) throw error;
+  return data;
+}
+
+export async function deleteVendor(id: string) {
+  const { error } = await supabaseAdmin
+    .from("security_vendors")
+    .delete()
+    .eq("id", id);
+
+  if (error) throw error;
+  return true;
+}
+
+// ============================================
+// PROPERTY PHOTO FUNCTIONS
+// ============================================
+
+export async function uploadPropertyPhoto(
+  fileBuffer: Buffer,
+  filename: string
+) {
+  const path = `covers/${Date.now()}-${filename}`;
+  const { error } = await supabaseAdmin.storage
+    .from("property-photos")
+    .upload(path, fileBuffer, {
+      contentType: "image/jpeg",
+      upsert: true,
+    });
+
+  if (error) throw error;
+
+  const {
+    data: { publicUrl },
+  } = supabaseAdmin.storage.from("property-photos").getPublicUrl(path);
+
+  return publicUrl;
+}
