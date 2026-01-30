@@ -14,7 +14,7 @@ export async function POST() {
     },
     {
       email: "demo@chatmanconcierge.com",
-      password: "demo1234",
+      password: "CCdemo1234",
       name: "Alexander Hartwell",
       role: "customer",
     },
