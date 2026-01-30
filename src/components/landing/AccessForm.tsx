@@ -402,9 +402,9 @@ export default function AccessForm() {
 
       <p className="text-center text-[10px] text-silver-600">
         Discretion is standard.{' '}
-        <a href="#" className="hover:text-silver-400 transition-colors">Privacy</a>
+        <a href="/privacy" target="_blank" className="text-silver-400 hover:text-[#C9B370] transition-colors underline underline-offset-2">Privacy</a>
         {' '}&middot;{' '}
-        <a href="#" className="hover:text-silver-400 transition-colors">Terms</a>
+        <a href="/terms" target="_blank" className="text-silver-400 hover:text-[#C9B370] transition-colors underline underline-offset-2">Terms</a>
       </p>
     </form>
   );
