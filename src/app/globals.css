@@ -330,7 +330,22 @@ input, textarea, select {
 /* Allow contact/form sections to grow beyond viewport and scroll */
 .snap-section.snap-section-scroll {
   height: auto;
+  min-height: 100vh;
   overflow-y: auto;
+  -webkit-overflow-scrolling: touch;
+  scroll-snap-align: start;
+  scroll-snap-stop: normal;
+}
+
+/* On mobile, relax mandatory snapping so contact form is fully reachable */
+@media (max-width: 768px) {
+  .snap-container {
+    scroll-snap-type: y proximity;
+  }
+  .snap-section.snap-section-scroll {
+    min-height: auto;
+    padding-bottom: env(safe-area-inset-bottom, 0px);
+  }
 }
 
 /* Landing Hero Typography */
