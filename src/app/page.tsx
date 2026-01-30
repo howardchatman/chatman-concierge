@@ -1,5 +1,6 @@
 'use client';
 
+import { useEffect, useState } from 'react';
 import SnapSection from '@/components/landing/SnapSection';
 import AccessForm from '@/components/landing/AccessForm';
 import ProgressDots from '@/components/landing/ProgressDots';
@@ -7,6 +8,18 @@ import ProgressDots from '@/components/landing/ProgressDots';
 const SECTION_IDS = ['hero', 'security', 'service', 'arrival', 'contact'];
 
 export default function LandingPage() {
+  const [showLogin, setShowLogin] = useState(true);
+
+  useEffect(() => {
+    const container = document.querySelector('.snap-container');
+    if (!container) return;
+    const handleScroll = () => {
+      setShowLogin(container.scrollTop < window.innerHeight * 0.8);
+    };
+    container.addEventListener('scroll', handleScroll, { passive: true });
+    return () => container.removeEventListener('scroll', handleScroll);
+  }, []);
+
   const scrollToNext = () => {
     const container = document.querySelector('.snap-container');
     if (!container) return;
@@ -21,10 +34,10 @@ export default function LandingPage() {
     <div className="snap-container">
       <ProgressDots totalSections={5} sectionIds={SECTION_IDS} />
 
-      {/* Client Login - fixed top-right */}
+      {/* Client Login - fixed top-right, hides after first slide */}
       <a
         href="https://app.chatmanconcierge.com"
-        className="fixed top-4 right-4 md:top-6 md:right-6 z-50 flex items-center gap-2 px-4 py-2 rounded-xl bg-black/40 backdrop-blur-md border border-white/10 text-xs text-silver-300 hover:text-[#C9B370] hover:border-[#C9B370]/30 transition-all duration-200"
+        className={`fixed top-4 right-4 md:top-6 md:right-6 z-50 flex items-center gap-2 px-5 py-3 md:px-4 md:py-2 rounded-xl bg-black/40 backdrop-blur-md border border-white/10 text-sm md:text-xs text-silver-300 hover:text-[#C9B370] hover:border-[#C9B370]/30 active:scale-95 transition-all duration-300 ${showLogin ? 'opacity-100 translate-y-0' : 'opacity-0 -translate-y-4 pointer-events-none'}`}
       >
         <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.5}>
           <path strokeLinecap="round" strokeLinejoin="round" d="M15.75 9V5.25A2.25 2.25 0 0013.5 3h-6a2.25 2.25 0 00-2.25 2.25v13.5A2.25 2.25 0 007.5 21h6a2.25 2.25 0 002.25-2.25V15m3 0l3-3m0 0l-3-3m3 3H9" />
@@ -145,11 +158,11 @@ export default function LandingPage() {
         id="contact"
         backgroundImage="/cc_h5.png"
         gradientDirection="center"
-        className="snap-section-scroll !items-start"
+        className=""
       >
-        <div className="w-full flex items-start justify-center py-6 md:py-8 px-4 md:px-6">
+        <div className="w-full flex flex-col items-center justify-center px-4 md:px-6">
           <div className="w-full max-w-lg">
-            <div className="text-center mb-5 md:mb-8">
+            <div className="text-center mb-4 md:mb-6">
               <p className="overline mb-2 text-[#C9B370]">Private Access</p>
               <h2 className="hero-display text-2xl md:text-4xl text-white mb-2">
                 Request Access
@@ -158,10 +171,9 @@ export default function LandingPage() {
                 Tell us what you&apos;re overseeing — our concierge will coordinate next steps discreetly.
               </p>
             </div>
-            <div className="bg-obsidian/80 backdrop-blur-md border border-border/60 rounded-2xl p-4 md:p-8">
+            <div className="bg-obsidian/80 backdrop-blur-md border border-border/60 rounded-2xl p-4 md:p-6">
               <AccessForm />
             </div>
-            <div className="pb-6" />
           </div>
         </div>
       </SnapSection>

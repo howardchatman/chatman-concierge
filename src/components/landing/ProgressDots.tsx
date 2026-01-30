@@ -35,7 +35,7 @@ export default function ProgressDots({ totalSections, sectionIds }: ProgressDots
 
   return (
     <nav
-      className="hidden md:flex fixed right-6 top-1/2 -translate-y-1/2 z-50 flex-col gap-3"
+      className="fixed right-4 md:right-6 top-1/2 -translate-y-1/2 z-50 flex flex-col gap-3"
       aria-label="Section navigation"
     >
       {Array.from({ length: totalSections }).map((_, index) => (
