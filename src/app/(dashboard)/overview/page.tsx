@@ -1,11 +1,12 @@
 'use client';
 
 import { useAuth } from '@/lib/auth-context';
-import { mockSystemStatus, mockIncidents, mockRequests, mockActivity } from '@/data/mockData';
+import { useEstate } from '@/lib/estate-context';
 import { Icon } from '@/components/icons';
 
 export default function OverviewPage() {
   const { user, isDemo, isLoading } = useAuth();
+  const { estate } = useEstate();
 
   if (isLoading) {
     return (
@@ -17,11 +18,11 @@ export default function OverviewPage() {
 
   const firstName = user?.name?.split(' ')[0] || 'Welcome';
 
-  // Demo user sees mock data, real users see empty state
-  const incidents = isDemo ? mockIncidents : [];
-  const pendingRequests = isDemo ? mockRequests.filter(r => r.status === 'pending') : [];
-  const activity = isDemo ? mockActivity : [];
-  const systemStatus = isDemo ? mockSystemStatus : null;
+  // Demo user sees estate-specific data, real users see empty state
+  const incidents = isDemo && estate ? estate.incidents : [];
+  const pendingRequests = isDemo && estate ? estate.requests.filter(r => r.status === 'pending') : [];
+  const activity = isDemo && estate ? estate.activity : [];
+  const systemStatus = isDemo && estate ? estate.systemStatus : null;
 
   return (
     <div className="space-y-6">
@@ -187,8 +188,8 @@ export default function OverviewPage() {
           <div className="flex-1">
             <h3 className="font-serif text-lg text-text mb-1">AI Concierge Insight</h3>
             <p className="text-sm text-silver-400 mb-3">
-              {isDemo
-                ? "Based on your schedule, I've pre-conditioned the master suite to 72°F and queued your preferred evening playlist. The landscaping crew finished early — photos are ready for your review."
+              {isDemo && estate
+                ? estate.aiInsight
                 : "Your AI concierge is active and monitoring your properties. As data flows in, insights will appear here."
               }
             </p>

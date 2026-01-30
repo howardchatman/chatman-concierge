@@ -3,6 +3,7 @@
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { useAuth } from '@/lib/auth-context';
+import { useEstate } from '@/lib/estate-context';
 
 const navigation = [
   {
@@ -82,10 +83,11 @@ const secondaryNavigation = [
 export default function Sidebar() {
   const pathname = usePathname();
   const { user, isDemo, logout } = useAuth();
+  const { estate } = useEstate();
 
   const displayName = user?.name || user?.email?.split('@')[0] || 'User';
   const initials = displayName.split(' ').map(n => n[0]).join('').toUpperCase().slice(0, 2);
-  const estateName = isDemo ? 'Palm Beach Residence' : 'Estate Dashboard';
+  const estateName = isDemo && estate ? estate.name : 'Estate Dashboard';
 
   return (
     <aside className="fixed left-0 top-0 bottom-0 w-64 bg-surface border-r border-border flex flex-col z-40">

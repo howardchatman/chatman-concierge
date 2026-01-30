@@ -1,10 +1,12 @@
 'use client';
 
 import { useAuth } from '@/lib/auth-context';
-import { mockRequests, mockActivity, mockBudgets, mockVendors } from '@/data/mockData';
+import { useEstate } from '@/lib/estate-context';
+import { Icon } from '@/components/icons';
 
 export default function StaffPage() {
   const { isDemo, isLoading } = useAuth();
+  const { estate } = useEstate();
 
   if (isLoading) {
     return (
@@ -14,10 +16,10 @@ export default function StaffPage() {
     );
   }
 
-  const requests = isDemo ? mockRequests : [];
-  const activity = isDemo ? mockActivity : [];
-  const budgets = isDemo ? mockBudgets : [];
-  const vendors = isDemo ? mockVendors : [];
+  const requests = isDemo && estate ? estate.requests : [];
+  const activity = isDemo && estate ? estate.activity : [];
+  const budgets = isDemo && estate ? estate.budgets : [];
+  const vendors = isDemo && estate ? estate.vendors : [];
 
   const pendingRequests = requests.filter(r => r.status === 'pending');
   const inProgressRequests = requests.filter(r => r.status === 'in-progress');
@@ -55,8 +57,8 @@ export default function StaffPage() {
               <span className="px-2 py-0.5 rounded bg-status-secure/15 text-status-secure text-xs font-medium">Active</span>
             </div>
             <p className="text-sm text-silver-400 mb-4">
-              {isDemo
-                ? "Today I filtered 2 unsolicited calls, coordinated the pool maintenance crew, and scheduled tomorrow's HVAC inspection. One invoice requires your approval and the landscaping photos are ready for review."
+              {isDemo && estate
+                ? estate.aiSummary
                 : "Your AI concierge is active and ready to coordinate operations. Activity will appear here as your estate systems come online."
               }
             </p>
@@ -218,7 +220,7 @@ export default function StaffPage() {
                 key={act.id}
                 className="flex items-start gap-3 p-4 bg-surface-elevated rounded-xl border border-border hover:border-border-light transition-colors"
               >
-                <span className="text-xl">{act.icon}</span>
+                <span className="text-silver-400"><Icon name={act.icon || 'document'} className="w-5 h-5" /></span>
                 <div className="flex-1 min-w-0">
                   <p className="text-sm text-text font-medium">{act.title}</p>
                   <p className="text-xs text-silver-500 mt-0.5 line-clamp-1">{act.description}</p>

@@ -1,20 +1,12 @@
 'use client';
 
 import { useAuth } from '@/lib/auth-context';
-import { mockSystemStatus, mockIncidents } from '@/data/mockData';
+import { useEstate } from '@/lib/estate-context';
 import { Icon } from '@/components/icons';
-
-const demoZones = [
-  { name: 'Main Entrance', status: 'armed', cameras: 4, sensors: 6 },
-  { name: 'East Wing', status: 'armed', cameras: 6, sensors: 8 },
-  { name: 'West Wing', status: 'armed', cameras: 5, sensors: 7 },
-  { name: 'Pool Area', status: 'armed', cameras: 8, sensors: 4 },
-  { name: 'Guest House', status: 'armed', cameras: 4, sensors: 5 },
-  { name: 'Garage Complex', status: 'armed', cameras: 6, sensors: 8 },
-];
 
 export default function SecurityPage() {
   const { isDemo, isLoading } = useAuth();
+  const { estate } = useEstate();
 
   if (isLoading) {
     return (
@@ -24,9 +16,9 @@ export default function SecurityPage() {
     );
   }
 
-  const status = isDemo ? mockSystemStatus : null;
-  const incidents = isDemo ? mockIncidents : [];
-  const zones = isDemo ? demoZones : [];
+  const status = isDemo && estate ? estate.systemStatus : null;
+  const incidents = isDemo && estate ? estate.incidents : [];
+  const zones = isDemo && estate ? estate.zones : [];
 
   return (
     <div className="space-y-6">

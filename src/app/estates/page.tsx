@@ -2,43 +2,12 @@
 
 import { useRouter } from 'next/navigation';
 import { AuthProvider, useAuth } from '@/lib/auth-context';
-
-const demoEstates = [
-  {
-    id: 'palm-beach',
-    name: 'Palm Beach Residence',
-    address: '1200 South Ocean Boulevard, Palm Beach, FL',
-    status: 'secure',
-    lastActivity: '2 minutes ago',
-    sqft: '18,500',
-    bedrooms: 7,
-    staff: 12,
-  },
-  {
-    id: 'aspen-lodge',
-    name: 'Aspen Mountain Lodge',
-    address: '500 Little Nell Road, Aspen, CO',
-    status: 'away',
-    lastActivity: '3 days ago',
-    sqft: '12,200',
-    bedrooms: 5,
-    staff: 6,
-  },
-  {
-    id: 'manhattan-penthouse',
-    name: 'Manhattan Penthouse',
-    address: '432 Park Avenue, New York, NY',
-    status: 'secure',
-    lastActivity: '1 hour ago',
-    sqft: '8,400',
-    bedrooms: 4,
-    staff: 4,
-  },
-];
+import { EstateProvider, useEstate, allEstates } from '@/lib/estate-context';
 
 function EstatesContent() {
   const router = useRouter();
   const { user, isDemo, isLoading } = useAuth();
+  const { selectEstate } = useEstate();
 
   if (isLoading) {
     return (
@@ -48,9 +17,10 @@ function EstatesContent() {
     );
   }
 
-  const estates = isDemo ? demoEstates : [];
+  const estates = isDemo ? allEstates : [];
 
-  const handleSelectEstate = () => {
+  const handleSelectEstate = (id: string) => {
+    selectEstate(id);
     router.push('/overview');
   };
 
@@ -108,7 +78,7 @@ function EstatesContent() {
             {estates.map((estate) => (
               <button
                 key={estate.id}
-                onClick={() => handleSelectEstate()}
+                onClick={() => handleSelectEstate(estate.id)}
                 className="group w-full text-left bg-surface border border-border-light rounded-2xl p-6 hover:border-[#C9B370]/30 hover:shadow-[0_0_30px_-10px_rgba(201,179,112,0.15)] transition-all duration-300"
               >
                 <div className="flex items-start justify-between gap-6">
@@ -186,7 +156,9 @@ function EstatesContent() {
 export default function EstatesPage() {
   return (
     <AuthProvider>
-      <EstatesContent />
+      <EstateProvider>
+        <EstatesContent />
+      </EstateProvider>
     </AuthProvider>
   );
 }

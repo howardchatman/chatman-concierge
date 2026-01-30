@@ -2,14 +2,15 @@
 
 import { useState } from 'react';
 import { useAuth } from '@/lib/auth-context';
-import { mockSystemStatus } from '@/data/mockData';
+import { useEstate } from '@/lib/estate-context';
 import { Icon } from '@/components/icons';
 
 export default function TopBar() {
   const [showQuickActions, setShowQuickActions] = useState(false);
   const { isDemo } = useAuth();
+  const { estate } = useEstate();
 
-  const temperature = isDemo ? mockSystemStatus.climate.temperature : null;
+  const temperature = isDemo && estate ? estate.systemStatus.climate.temperature : null;
 
   return (
     <header className="fixed top-0 left-64 right-0 h-16 bg-surface/80 backdrop-blur-md border-b border-border z-30">
@@ -18,10 +19,10 @@ export default function TopBar() {
         <div className="flex items-center gap-4">
           <div>
             <h1 className="font-serif text-lg text-text">
-              {isDemo ? 'Palm Beach Residence' : 'Command Center'}
+              {isDemo && estate ? estate.name : 'Command Center'}
             </h1>
             <p className="text-xs text-silver-500">
-              {isDemo ? '1200 South Ocean Boulevard' : 'Estate Operations'}
+              {isDemo && estate ? estate.address : 'Estate Operations'}
             </p>
           </div>
         </div>

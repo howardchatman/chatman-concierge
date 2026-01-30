@@ -3,6 +3,7 @@
 import Sidebar from '@/components/dashboard/Sidebar';
 import TopBar from '@/components/dashboard/TopBar';
 import { AuthProvider } from '@/lib/auth-context';
+import { EstateProvider } from '@/lib/estate-context';
 
 export default function DashboardLayout({
   children,
@@ -11,15 +12,17 @@ export default function DashboardLayout({
 }) {
   return (
     <AuthProvider>
-      <div className="min-h-screen bg-obsidian">
-        <Sidebar />
-        <TopBar />
-        <main className="ml-64 pt-16 min-h-screen">
-          <div className="p-6">
-            {children}
-          </div>
-        </main>
-      </div>
+      <EstateProvider>
+        <div className="min-h-screen bg-obsidian">
+          <Sidebar />
+          <TopBar />
+          <main className="ml-64 pt-16 min-h-screen">
+            <div className="p-6">
+              {children}
+            </div>
+          </main>
+        </div>
+      </EstateProvider>
     </AuthProvider>
   );
 }
