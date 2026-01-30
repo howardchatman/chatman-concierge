@@ -29,7 +29,9 @@ export default function LoginPage() {
         return;
       }
 
-      router.push('/estates');
+      // Demo user picks an estate; admin goes straight to dashboard
+      const isDemo = data.user?.email === 'demo@chatmanconcierge.com';
+      router.push(isDemo ? '/estates' : '/overview');
     } catch {
       setError('Unable to connect. Please try again.');
     } finally {
