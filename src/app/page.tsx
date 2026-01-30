@@ -24,7 +24,7 @@ export default function LandingPage() {
       {/* Panel 1: Hero - "We do Everything." */}
       <SnapSection
         id="hero"
-        backgroundImage="https://images.unsplash.com/photo-1600596542815-ffad4c1539a9?auto=format&fit=crop&w=2000&q=80"
+        backgroundImage="/cc_h1.png"
         gradientDirection="center"
         isFirst
       >
@@ -51,7 +51,7 @@ export default function LandingPage() {
       {/* Panel 2: Security - "Let's" */}
       <SnapSection
         id="security"
-        backgroundImage="https://images.unsplash.com/photo-1558618666-fcd25c85cd64?auto=format&fit=crop&w=2000&q=80"
+        backgroundImage="/cc_h2.png"
         gradientDirection="bottom"
       >
         <div className="flex flex-col items-center justify-center text-center px-6">
@@ -69,7 +69,7 @@ export default function LandingPage() {
       {/* Panel 3: Service - "Make" */}
       <SnapSection
         id="service"
-        backgroundImage="https://images.unsplash.com/photo-1549317661-bd32c8ce0db2?auto=format&fit=crop&w=2000&q=80"
+        backgroundImage="/cc_h3.png"
         gradientDirection="bottom"
       >
         <div className="flex flex-col items-center justify-center text-center px-6">
@@ -87,7 +87,7 @@ export default function LandingPage() {
       {/* Panel 4: Arrival - "It Happen." */}
       <SnapSection
         id="arrival"
-        backgroundImage="https://images.unsplash.com/photo-1600585154340-be6161a56a0c?auto=format&fit=crop&w=2000&q=80"
+        backgroundImage="/cc_h4.png"
         gradientDirection="bottom"
       >
         <div className="flex flex-col items-center justify-center text-center px-6">
@@ -114,7 +114,7 @@ export default function LandingPage() {
       {/* Panel 5: Contact Form */}
       <SnapSection
         id="contact"
-        backgroundImage="https://images.unsplash.com/photo-1613490493576-7fde63acd811?auto=format&fit=crop&w=2000&q=80"
+        backgroundImage="/cc_h5.png"
         gradientDirection="center"
         className="!items-start overflow-y-auto"
       >
