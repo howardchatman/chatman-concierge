@@ -7,16 +7,10 @@ import { hashPassword } from "@/lib/auth";
 export async function POST() {
   const users = [
     {
-      email: "howard@chatmaninc.com",
-      password: "Howard1234",
+      email: "howard@chatmanconcierge.com",
+      password: "1!Obatala1!",
       name: "Howard",
       role: "admin",
-    },
-    {
-      email: "howardchatman@hotmail.com",
-      password: "Howard1234",
-      name: "Howard Chatman",
-      role: "customer",
     },
   ];
 

@@ -146,6 +146,25 @@ export default function Sidebar() {
             );
           })}
         </div>
+
+        {/* Internal */}
+        <div className="h-px bg-border my-4" />
+        <p className="overline px-4 mb-2 text-silver-600">Internal</p>
+        <div className="space-y-1">
+          <Link
+            href="/scope"
+            className={`flex items-center gap-3 px-4 py-2.5 rounded-xl text-sm font-medium transition-all duration-200
+              ${pathname === '/scope'
+                ? 'bg-[#C9B370]/10 text-[#C9B370]'
+                : 'text-silver-500 hover:text-text hover:bg-surface-elevated'
+              }`}
+          >
+            <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.5}>
+              <path strokeLinecap="round" strokeLinejoin="round" d="M12 3v17.25m0 0c-1.472 0-2.882.265-4.185.75M12 20.25c1.472 0 2.882.265 4.185.75M18.75 4.97A48.416 48.416 0 0012 4.5c-2.291 0-4.545.16-6.75.47m13.5 0c1.01.143 2.01.317 3 .52m-3-.52l2.62 10.726c.122.499-.106 1.028-.589 1.202a5.988 5.988 0 01-2.031.352 5.988 5.988 0 01-2.031-.352c-.483-.174-.711-.703-.59-1.202L18.75 4.971zm-13.5 0L7.87 15.696c.122.499-.106 1.028-.589 1.202a5.989 5.989 0 01-2.031.352 5.989 5.989 0 01-2.031-.352c-.483-.174-.711-.703-.59-1.202L5.25 4.971z" />
+            </svg>
+            Scope &amp; Authority
+          </Link>
+        </div>
       </nav>
 
       {/* User & Estate Switcher */}

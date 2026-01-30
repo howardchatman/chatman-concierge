@@ -7,7 +7,7 @@ const JWT_SECRET = new TextEncoder().encode(
 );
 
 // Admin emails that get admin role
-const ADMIN_EMAILS = ["howard@chatmaninc.com"];
+const ADMIN_EMAILS = ["howard@chatmanconcierge.com"];
 
 export interface User {
   id: string;
