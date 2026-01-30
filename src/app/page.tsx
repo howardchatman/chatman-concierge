@@ -21,6 +21,17 @@ export default function LandingPage() {
     <div className="snap-container">
       <ProgressDots totalSections={5} sectionIds={SECTION_IDS} />
 
+      {/* Client Login - fixed top-right */}
+      <a
+        href="https://app.chatmanconcierge.com"
+        className="fixed top-4 right-4 md:top-6 md:right-6 z-50 flex items-center gap-2 px-4 py-2 rounded-xl bg-black/40 backdrop-blur-md border border-white/10 text-xs text-silver-300 hover:text-[#C9B370] hover:border-[#C9B370]/30 transition-all duration-200"
+      >
+        <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.5}>
+          <path strokeLinecap="round" strokeLinejoin="round" d="M15.75 9V5.25A2.25 2.25 0 0013.5 3h-6a2.25 2.25 0 00-2.25 2.25v13.5A2.25 2.25 0 007.5 21h6a2.25 2.25 0 002.25-2.25V15m3 0l3-3m0 0l-3-3m3 3H9" />
+        </svg>
+        Client Login
+      </a>
+
       {/* Panel 1: Hero - "We do Everything." */}
       <SnapSection
         id="hero"
@@ -28,16 +39,6 @@ export default function LandingPage() {
         gradientDirection="center"
         isFirst
       >
-        {/* App Login Link */}
-        <a
-          href="https://app.chatmanconcierge.com"
-          className="absolute bottom-6 right-6 z-20 flex items-center gap-2 px-4 py-2 rounded-xl bg-surface/80 backdrop-blur-sm border border-border/60 text-xs text-silver-400 hover:text-[#C9B370] hover:border-[#C9B370]/30 transition-all duration-200"
-        >
-          <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.5}>
-            <path strokeLinecap="round" strokeLinejoin="round" d="M15.75 9V5.25A2.25 2.25 0 0013.5 3h-6a2.25 2.25 0 00-2.25 2.25v13.5A2.25 2.25 0 007.5 21h6a2.25 2.25 0 002.25-2.25V15m3 0l3-3m0 0l-3-3m3 3H9" />
-          </svg>
-          Client Login
-        </a>
         <div className="flex flex-col items-center justify-center text-center px-6">
           <p className="overline mb-6 text-silver-400">Chatman Concierge</p>
           <h1 className="hero-display text-6xl md:text-8xl lg:text-9xl text-white mb-8">
@@ -160,18 +161,7 @@ export default function LandingPage() {
             <div className="bg-obsidian/80 backdrop-blur-md border border-border/60 rounded-2xl p-4 md:p-8">
               <AccessForm />
             </div>
-            {/* App Login Link - inline at bottom on mobile */}
-            <div className="flex justify-center mt-4 pb-4">
-              <a
-                href="https://app.chatmanconcierge.com"
-                className="flex items-center gap-2 px-4 py-2 rounded-xl bg-surface/80 backdrop-blur-sm border border-border/60 text-xs text-silver-400 hover:text-[#C9B370] hover:border-[#C9B370]/30 transition-all duration-200"
-              >
-                <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.5}>
-                  <path strokeLinecap="round" strokeLinejoin="round" d="M15.75 9V5.25A2.25 2.25 0 0013.5 3h-6a2.25 2.25 0 00-2.25 2.25v13.5A2.25 2.25 0 007.5 21h6a2.25 2.25 0 002.25-2.25V15m3 0l3-3m0 0l-3-3m3 3H9" />
-                </svg>
-                Client Login
-              </a>
-            </div>
+            <div className="pb-6" />
           </div>
         </div>
       </SnapSection>
