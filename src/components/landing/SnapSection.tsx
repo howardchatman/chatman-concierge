@@ -79,7 +79,7 @@ export default function SnapSection({
 
       {/* Content */}
       <div
-        className="relative z-10 w-full"
+        className="relative z-10 w-full h-full"
         style={{
           opacity: isVisible ? 1 : 0,
           transform: isVisible ? 'translateY(0)' : 'translateY(40px)',
