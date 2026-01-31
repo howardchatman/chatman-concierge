@@ -155,10 +155,10 @@ input, textarea, select {
            transition-all duration-300 hover:text-text hover:bg-surface-elevated;
   }
 
-  /* Input Styles */
+  /* Input Styles — 16px min on mobile prevents iOS auto-zoom */
   .input {
     @apply w-full bg-[#1A1A1D] border border-[#2E2E32] rounded-lg px-4 py-3
-           text-text placeholder:text-silver-600
+           text-base md:text-sm text-text placeholder:text-silver-600
            focus:border-[#C9B370]/50 focus:ring-1 focus:ring-[#C9B370]/20
            transition-all duration-200;
   }

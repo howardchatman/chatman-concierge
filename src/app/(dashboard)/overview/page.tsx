@@ -4,13 +4,85 @@ import { useRef, useState } from 'react';
 import { useAuth } from '@/lib/auth-context';
 import { useEstate } from '@/lib/estate-context';
 import { Icon } from '@/components/icons';
+import ActionSimulationModal from './components/ActionSimulationModal';
+import CameraModal from './components/CameraModal';
+import ClimateModal from './components/ClimateModal';
+import SecurityModal from './components/SecurityModal';
+import DoorsModal from './components/DoorsModal';
+import PowerModal from './components/PowerModal';
+import WaterModal from './components/WaterModal';
+
+const ACTION_CONFIGS = {
+  'arrive-home': {
+    title: 'Arriving Home...',
+    icon: 'home',
+    iconColor: 'text-[#C9B370]',
+    steps: [
+      { label: 'Disarming entry zones', icon: 'shield', duration: 1200 },
+      { label: 'Unlocking front doors', icon: 'lock', duration: 800 },
+      { label: 'Setting climate to 72°F', icon: 'thermometer', duration: 1000 },
+      { label: 'Activating welcome lighting', icon: 'bolt', duration: 600 },
+      { label: 'Starting arrival playlist', icon: 'wine', duration: 800 },
+      { label: 'Notifying staff of arrival', icon: 'ai', duration: 600 },
+    ],
+  },
+  'arm-away': {
+    title: 'Arming Away...',
+    icon: 'lock',
+    iconColor: 'text-red-400',
+    steps: [
+      { label: 'Verifying all doors locked', icon: 'lock', duration: 1500 },
+      { label: 'Activating perimeter sensors', icon: 'shield', duration: 1000 },
+      { label: 'Enabling motion detection', icon: 'camera', duration: 800 },
+      { label: 'Arming all 6 zones', icon: 'shield', duration: 1200 },
+      { label: 'Setting climate to eco mode', icon: 'thermometer', duration: 600 },
+      { label: 'System armed', icon: 'check', duration: 500 },
+    ],
+  },
+  'night-lock': {
+    title: 'Night Lockdown...',
+    icon: 'moon',
+    iconColor: 'text-blue-400',
+    steps: [
+      { label: 'Locking all 24 doors', icon: 'lock', duration: 1500 },
+      { label: 'Arming perimeter zones', icon: 'shield', duration: 1000 },
+      { label: 'Dimming exterior lights', icon: 'bolt', duration: 800 },
+      { label: 'Activating night path lighting', icon: 'home', duration: 600 },
+      { label: 'Closing all motorized shades', icon: 'moon', duration: 800 },
+      { label: 'Night mode active', icon: 'check', duration: 500 },
+    ],
+  },
+  'entertain': {
+    title: 'Entertainment Mode...',
+    icon: 'wine',
+    iconColor: 'text-purple-400',
+    steps: [
+      { label: 'Setting ambient lighting', icon: 'bolt', duration: 800 },
+      { label: 'Adjusting climate to 70°F', icon: 'thermometer', duration: 1000 },
+      { label: 'Starting background music', icon: 'wine', duration: 600 },
+      { label: 'Opening terrace shades', icon: 'home', duration: 800 },
+      { label: 'Enabling guest Wi-Fi network', icon: 'ai', duration: 600 },
+      { label: 'Entertainment mode active', icon: 'check', duration: 500 },
+    ],
+  },
+} as const;
+
+type ModalType = 'arrive-home' | 'arm-away' | 'night-lock' | 'entertain' | 'cameras' | 'climate' | 'security' | 'doors' | 'power' | 'water' | null;
+
+const ACTION_KEYS: Record<string, ModalType> = {
+  'Arrive Home': 'arrive-home',
+  'Arm Away': 'arm-away',
+  'Night Lock': 'night-lock',
+  'Entertain': 'entertain',
+};
 
 export default function OverviewPage() {
-  const { user, isDemo, isLoading } = useAuth();
+  const { isDemo, isLoading } = useAuth();
   const { estate } = useEstate();
   const fileInputRef = useRef<HTMLInputElement>(null);
   const [coverUrl, setCoverUrl] = useState<string | null>(null);
   const [uploading, setUploading] = useState(false);
+  const [activeModal, setActiveModal] = useState<ModalType>(null);
 
   if (isLoading) {
     return (
@@ -24,7 +96,6 @@ export default function OverviewPage() {
   const activity = isDemo && estate ? estate.activity : [];
   const heroImage = coverUrl || (isDemo && estate ? estate.coverImage : null);
 
-  // Build status line
   const statusParts: string[] = [];
   if (systemStatus) {
     statusParts.push(`${systemStatus.doors.locked} doors locked`);
@@ -55,6 +126,8 @@ export default function OverviewPage() {
   const statusLabel = estateStatus === 'secure' ? 'Secure' : estateStatus === 'away' ? 'Away' : estateStatus === 'alert' ? 'Alert' : 'Active';
   const statusDotColor = estateStatus === 'secure' ? 'bg-status-secure shadow-[0_0_8px_rgba(74,222,128,0.6)]' : estateStatus === 'alert' ? 'bg-status-alert animate-pulse' : 'bg-silver-500';
 
+  const closeModal = () => setActiveModal(null);
+
   return (
     <div className="space-y-6">
       {/* ── Hero Property Image ─────────────────────────────────── */}
@@ -69,11 +142,9 @@ export default function OverviewPage() {
           <div className="absolute inset-0 bg-gradient-to-br from-surface-elevated to-obsidian" />
         )}
 
-        {/* Gradient overlays */}
         <div className="absolute inset-0 bg-gradient-to-t from-obsidian/90 via-obsidian/30 to-transparent" />
         <div className="absolute inset-0 bg-gradient-to-r from-obsidian/40 to-transparent" />
 
-        {/* Status Badge (top-left) */}
         <div className="absolute top-5 left-5">
           <div className="flex items-center gap-2 px-3 py-1.5 rounded-full bg-black/50 backdrop-blur-md border border-white/10">
             <span className={`w-2 h-2 rounded-full ${statusDotColor}`} />
@@ -81,16 +152,9 @@ export default function OverviewPage() {
           </div>
         </div>
 
-        {/* Upload Button (top-right) — admin only */}
         {!isDemo && (
           <div className="absolute top-5 right-5">
-            <input
-              ref={fileInputRef}
-              type="file"
-              accept="image/*"
-              onChange={handleUpload}
-              className="hidden"
-            />
+            <input ref={fileInputRef} type="file" accept="image/*" onChange={handleUpload} className="hidden" />
             <button
               onClick={() => fileInputRef.current?.click()}
               disabled={uploading}
@@ -105,7 +169,6 @@ export default function OverviewPage() {
           </div>
         )}
 
-        {/* Property Info (bottom-left) */}
         <div className="absolute bottom-5 left-5 right-5">
           <h1 className="font-serif text-2xl md:text-3xl text-white mb-1 drop-shadow-lg">
             {isDemo && estate ? estate.name : 'Home'}
@@ -130,6 +193,7 @@ export default function OverviewPage() {
           ].map((action) => (
             <button
               key={action.label}
+              onClick={() => setActiveModal(ACTION_KEYS[action.label] || null)}
               className="group flex flex-col items-center gap-2 p-5 rounded-2xl bg-surface border border-border hover:border-[#C9B370]/30 hover:bg-surface-elevated transition-all"
             >
               <div className={`w-10 h-10 rounded-xl bg-surface-elevated border border-border-light flex items-center justify-center group-hover:border-[#C9B370]/30 transition-all ${action.color}`}>
@@ -150,7 +214,7 @@ export default function OverviewPage() {
         {systemStatus ? (
           <div className="grid grid-cols-2 md:grid-cols-3 gap-3">
             {/* Perimeter */}
-            <div className="bg-surface border border-border rounded-2xl p-5">
+            <button onClick={() => setActiveModal('security')} className="bg-surface border border-border rounded-2xl p-5 text-left cursor-pointer hover:border-[#C9B370]/30 hover:bg-surface-elevated transition-all">
               <div className="flex items-center justify-between mb-3">
                 <div className="w-9 h-9 rounded-xl bg-status-secure/10 flex items-center justify-center">
                   <Icon name="shield" className="w-5 h-5 text-status-secure" />
@@ -159,10 +223,10 @@ export default function OverviewPage() {
               </div>
               <p className="text-lg font-serif text-text capitalize">{systemStatus.perimeter}</p>
               <p className="text-xs text-silver-500">Perimeter · {estate?.zones.length || 0} zones</p>
-            </div>
+            </button>
 
             {/* Cameras */}
-            <div className="bg-surface border border-border rounded-2xl p-5">
+            <button onClick={() => setActiveModal('cameras')} className="bg-surface border border-border rounded-2xl p-5 text-left cursor-pointer hover:border-[#C9B370]/30 hover:bg-surface-elevated transition-all">
               <div className="flex items-center justify-between mb-3">
                 <div className="w-9 h-9 rounded-xl bg-blue-500/10 flex items-center justify-center">
                   <Icon name="camera" className="w-5 h-5 text-blue-400" />
@@ -171,10 +235,10 @@ export default function OverviewPage() {
               </div>
               <p className="text-lg font-serif text-text">{systemStatus.cameras.online}/{systemStatus.cameras.total}</p>
               <p className="text-xs text-silver-500">Cameras · {systemStatus.cameras.offline} offline</p>
-            </div>
+            </button>
 
             {/* Climate */}
-            <div className="bg-surface border border-border rounded-2xl p-5">
+            <button onClick={() => setActiveModal('climate')} className="bg-surface border border-border rounded-2xl p-5 text-left cursor-pointer hover:border-[#C9B370]/30 hover:bg-surface-elevated transition-all">
               <div className="flex items-center justify-between mb-3">
                 <div className="w-9 h-9 rounded-xl bg-orange-500/10 flex items-center justify-center">
                   <Icon name="thermometer" className="w-5 h-5 text-orange-400" />
@@ -182,24 +246,24 @@ export default function OverviewPage() {
               </div>
               <p className="text-lg font-serif text-text">{systemStatus.climate.temperature}°F</p>
               <p className="text-xs text-silver-500 capitalize">Climate · {systemStatus.climate.mode}</p>
-            </div>
+            </button>
 
             {/* Access */}
-            <div className="bg-surface border border-border rounded-2xl p-5">
+            <button onClick={() => setActiveModal('doors')} className="bg-surface border border-border rounded-2xl p-5 text-left cursor-pointer hover:border-[#C9B370]/30 hover:bg-surface-elevated transition-all">
               <div className="flex items-center justify-between mb-3">
                 <div className="w-9 h-9 rounded-xl bg-[#C9B370]/10 flex items-center justify-center">
                   <Icon name="lock" className="w-5 h-5 text-[#C9B370]" />
                 </div>
-                <button className="px-2.5 py-1 rounded-lg bg-surface-elevated border border-border text-[10px] font-medium text-silver-400 hover:text-[#C9B370] hover:border-[#C9B370]/30 transition-all">
+                <span className="px-2.5 py-1 rounded-lg bg-surface-elevated border border-border text-[10px] font-medium text-silver-400">
                   Lock All
-                </button>
+                </span>
               </div>
               <p className="text-lg font-serif text-text">{systemStatus.doors.locked}/{systemStatus.doors.total}</p>
               <p className="text-xs text-silver-500">Doors · {systemStatus.doors.open} open</p>
-            </div>
+            </button>
 
             {/* Power */}
-            <div className="bg-surface border border-border rounded-2xl p-5">
+            <button onClick={() => setActiveModal('power')} className="bg-surface border border-border rounded-2xl p-5 text-left cursor-pointer hover:border-[#C9B370]/30 hover:bg-surface-elevated transition-all">
               <div className="flex items-center justify-between mb-3">
                 <div className="w-9 h-9 rounded-xl bg-yellow-500/10 flex items-center justify-center">
                   <Icon name="bolt" className="w-5 h-5 text-yellow-400" />
@@ -208,10 +272,10 @@ export default function OverviewPage() {
               </div>
               <p className="text-lg font-serif text-text capitalize">{systemStatus.power}</p>
               <p className="text-xs text-silver-500">Power Grid</p>
-            </div>
+            </button>
 
             {/* Water */}
-            <div className="bg-surface border border-border rounded-2xl p-5">
+            <button onClick={() => setActiveModal('water')} className="bg-surface border border-border rounded-2xl p-5 text-left cursor-pointer hover:border-[#C9B370]/30 hover:bg-surface-elevated transition-all">
               <div className="flex items-center justify-between mb-3">
                 <div className="w-9 h-9 rounded-xl bg-cyan-500/10 flex items-center justify-center">
                   <Icon name="droplet" className="w-5 h-5 text-cyan-400" />
@@ -220,7 +284,7 @@ export default function OverviewPage() {
               </div>
               <p className="text-lg font-serif text-text capitalize">{systemStatus.water === 'normal' ? 'Normal' : 'Leak Detected'}</p>
               <p className="text-xs text-silver-500">Water System</p>
-            </div>
+            </button>
           </div>
         ) : (
           <div className="grid grid-cols-2 md:grid-cols-3 gap-3">
@@ -280,6 +344,20 @@ export default function OverviewPage() {
           </div>
         </div>
       </div>
+
+      {/* ── Modals ──────────────────────────────────────────────── */}
+      {(activeModal === 'arrive-home' || activeModal === 'arm-away' || activeModal === 'night-lock' || activeModal === 'entertain') && (
+        <ActionSimulationModal
+          {...ACTION_CONFIGS[activeModal]}
+          onClose={closeModal}
+        />
+      )}
+      {activeModal === 'cameras' && <CameraModal onClose={closeModal} />}
+      {activeModal === 'climate' && <ClimateModal onClose={closeModal} />}
+      {activeModal === 'security' && <SecurityModal onClose={closeModal} />}
+      {activeModal === 'doors' && <DoorsModal onClose={closeModal} />}
+      {activeModal === 'power' && <PowerModal onClose={closeModal} />}
+      {activeModal === 'water' && <WaterModal onClose={closeModal} />}
     </div>
   );
 }

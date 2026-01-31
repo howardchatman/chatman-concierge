@@ -134,7 +134,7 @@ export default function AccessForm() {
                 required
                 value={formData.firstName}
                 onChange={e => updateField('firstName', e.target.value)}
-                className="input text-sm py-2"
+                className="input py-2"
                 placeholder="First Name"
               />
               <input
@@ -142,7 +142,7 @@ export default function AccessForm() {
                 required
                 value={formData.lastName}
                 onChange={e => updateField('lastName', e.target.value)}
-                className="input text-sm py-2"
+                className="input py-2"
                 placeholder="Last Name"
               />
               <input
@@ -150,7 +150,7 @@ export default function AccessForm() {
                 required
                 value={formData.phone}
                 onChange={e => updateField('phone', e.target.value)}
-                className="input text-sm py-2"
+                className="input py-2"
                 placeholder="Phone"
               />
               <input
@@ -158,7 +158,7 @@ export default function AccessForm() {
                 required
                 value={formData.email}
                 onChange={e => updateField('email', e.target.value)}
-                className="input text-sm py-2"
+                className="input py-2"
                 placeholder="Email"
               />
             </div>
@@ -190,7 +190,7 @@ export default function AccessForm() {
                   type="text"
                   value={formData.companyName}
                   onChange={e => updateField('companyName', e.target.value)}
-                  className="input text-sm py-2 w-full"
+                  className="input py-2 w-full"
                   placeholder="Company (optional)"
                 />
               </div>
@@ -231,7 +231,7 @@ export default function AccessForm() {
                       min="1"
                       value={formData.petCount}
                       onChange={e => updateField('petCount', e.target.value)}
-                      className="input w-14 text-xs py-1.5 text-center"
+                      className="input w-16 py-1.5 text-center"
                       placeholder="#"
                     />
                   )}
@@ -264,7 +264,7 @@ export default function AccessForm() {
                       min="1"
                       value={formData.childrenCount}
                       onChange={e => updateField('childrenCount', e.target.value)}
-                      className="input w-14 text-xs py-1.5 text-center"
+                      className="input w-16 py-1.5 text-center"
                       placeholder="#"
                     />
                   )}
@@ -351,7 +351,7 @@ export default function AccessForm() {
                 <select
                   value={formData.doNotCallHour}
                   onChange={e => updateField('doNotCallHour', e.target.value)}
-                  className="input text-xs py-2 w-full appearance-none cursor-pointer"
+                  className="input py-2 w-full appearance-none cursor-pointer"
                 >
                   <option value="">Select...</option>
                   <option value="early-morning">5–7 AM</option>
@@ -368,7 +368,7 @@ export default function AccessForm() {
                 <select
                   value={formData.arrivalFeeling}
                   onChange={e => updateField('arrivalFeeling', e.target.value)}
-                  className="input text-xs py-2 w-full appearance-none cursor-pointer"
+                  className="input py-2 w-full appearance-none cursor-pointer"
                 >
                   <option value="">Select...</option>
                   <option value="quiet">Quiet</option>
